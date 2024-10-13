@@ -61,7 +61,7 @@ function addToCart(menuIndex) {
     let menuItem = book_menu[menuIndex];
     let cartSearch = cart.find((cartItem) => cartItem.title == menuItem.title);
     if (!cartSearch) {
-        document.getElementById('cart-bg').innerHTML = ''
+        document.getElementById('display-cart').innerHTML = ''
         let quantity = 1 
         cart.push({
             title: menuItem.title,
@@ -154,9 +154,12 @@ function removeBook(name) {
         if(notification == true) {
             cart.splice(index)
             alert('your order has been removed')
+        
+            document.getElementById('display-cart').innerHTML = ''
+            updateLocalstorage()
+        }else{
+            return addToCart('index')
         }
-        document.getElementById('display-cart').innerHTML = ''
-        updateLocalstorage()
     }
 }
 
@@ -168,13 +171,13 @@ function sumCartTotal() {
     document.getElementById('display-total').innerHTML = `<p style="font-size: 30px;"> Your Total Bill is: $${totalCost}</p>`;
 }
 
-function sumLeaseCartTotal() {
-    let leasetotalCost = 0;
-    lease_cart.forEach(cartItem => {
-        totalCost += cartItem.total
-    });
-    document.getElementById('display-lease-total').innerHTML = `<p style="font-size: 30px;"> Your Total Bill is: $${leasetotalCost}</p>`;
-}
+// function sumLeaseCartTotal() {
+//     let leasetotalCost = 0;
+//     lease_cart.forEach(Item => {
+//         totalCost += Item.total
+//     });
+//     document.getElementById('display-lease-total').innerHTML = `<p style="font-size: 30px;"> Your Total Bill is: $${leasetotalCost}</p>`;
+// }
 
 function listCartItems() {
     let cartLi = '';
@@ -193,7 +196,7 @@ function listCartItems() {
                 <button class="rounded-pill border-0 px-2 w-100" style="background-color: #02C27F;">Place Order</button>
             </a>
             <div class="col-6 text-end">
-                <i onclick="removeFood(${index})"class="bi bi-trash" style="color: white;"></i>
+                <i onclick="removeBook(${index})"class="bi bi-trash" style="color: white;"></i>
             </div>
         </div>`
         });
@@ -202,21 +205,6 @@ function listCartItems() {
 
     document.getElementById('display-cart').innerHTML = cartLi;
 }
-
-
-// function addBook(title) {
-//     let newBook = {
-//         title,
-//         author,
-//         Availability: true
-//     }
-//     Book_Info.push(newBook)
-//     return Book_Info;
-// }
-// let title = 'Beyound Intelligence'
-// let author = 'Uwazie Success Chinwekele'
-// let newly_added = addBook(title,author)
-// alert('successfully added')
 
 let lease_cart = [];
 function borrowBook(mytitle){
@@ -253,17 +241,15 @@ function borrowBook(mytitle){
             <div id="display-lease-total"></div>
         </div>`
         cartNumber();
-        sumLeaseCartTotal()
+        updateLocalstorage();
+        // sumLeaseCartTotal();
+        
         }
     }else{
         alert(`hello, ${list.title} is currently not available, kindly check another book`)
     }
     
 }
-
-// Display available books:
-// Create a function listAvailableBooks that lists all books that are available to borrow (i.e., isAvailable: true).
-// --------------------------------------
 
 function listAvailableBooks(book){
     let available_items = book_menu[book];

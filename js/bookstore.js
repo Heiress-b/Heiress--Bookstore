@@ -94,7 +94,6 @@ function addToCart(menuIndex) {
                     </a>
                 </div>
             </div>
-            <div id="display-total"></div>
         </div>`
         cartNumber();
         sumCartTotal()
@@ -127,7 +126,6 @@ function addToCart(menuIndex) {
                     </a>
                 </div>
             </div>
-            <div id="display-total"></div>
         </div>`
         document.getElementById('display-cart').innerHTML = ordered_book
         updateLocalstorage();
@@ -158,7 +156,7 @@ function removeBook(name) {
             document.getElementById('display-cart').innerHTML = ''
             updateLocalstorage()
         }else{
-            return addToCart('index')
+            addToCart('index')
         }
     }
 }
